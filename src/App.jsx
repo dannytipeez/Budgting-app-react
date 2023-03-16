@@ -5,6 +5,9 @@ import Dashboard, { dashboardLoader } from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 import Main, { mainLoader } from "./Layouts/main";
 
+//actions
+import logOutAction from './actions/Logout';
+
 
 //router
 const router = createBrowserRouter([
@@ -18,6 +21,10 @@ const router = createBrowserRouter([
         index: true,
         element: <Dashboard />,
         loader: dashboardLoader
+      },
+      {
+        path: "logout",
+        action: logOutAction
       }
     ]
   }
