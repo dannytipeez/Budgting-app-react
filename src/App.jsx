@@ -8,6 +8,10 @@ import Main, { mainLoader } from "./Layouts/main";
 //actions
 import logOutAction from './actions/Logout';
 
+//libraries
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 //router
 const router = createBrowserRouter([
@@ -35,6 +39,7 @@ function App() {
   return (
     <div className="App">
       <RouterProvider router={router} />
+      <ToastContainer />
     </div>
   );
 }
