@@ -12,6 +12,7 @@ export function dashboardLoader() {
 //action
 export async function dashboardAction({request}) {
   const data = await request.formData();
+  // console.log({data, request})
   const userData = Object.fromEntries(data)
   localStorage.setItem("userName", JSON.stringify(userData.userName));
 }
@@ -21,7 +22,7 @@ const Dashboard = () => {
     const { userName } = useLoaderData();
   return (
     <>
-      {userName ? (<p>userName</p>) : (<Intro />)}
+      {userName ? (<p>{userName}</p>) : (<Intro />)}
     </>
   )
 }
