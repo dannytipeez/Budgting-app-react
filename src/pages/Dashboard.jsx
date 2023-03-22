@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLoaderData } from 'react-router-dom';
+import { json, useLoaderData } from 'react-router-dom';
 import { fetchData } from '../helpers';
 import Intro from '../Components/Intro';
 
@@ -9,12 +9,19 @@ export function dashboardLoader() {
     return {userName};
 }
 
+//action
+export async function dashboardAction({request}) {
+  const data = await request.formData();
+  const userData = Object.fromEntries(data)
+  localStorage.setItem("userName", JSON.stringify(userData.userName));
+}
+
 //dashboard
 const Dashboard = () => {
     const { userName } = useLoaderData();
   return (
     <>
-      {userName ? (<p>{userName}</p>) : (<Intro />)}
+      {userName ? (<p>userName</p>) : (<Intro />)}
     </>
   )
 }

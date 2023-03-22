@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 //pages
-import Dashboard, { dashboardLoader } from "./pages/Dashboard";
+import Dashboard, { dashboardAction, dashboardLoader } from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 import Main, { mainLoader } from "./Layouts/main";
 
@@ -24,6 +24,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Dashboard />,
+        action: dashboardAction,
         loader: dashboardLoader
       },
       {
