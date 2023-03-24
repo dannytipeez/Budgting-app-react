@@ -8,8 +8,11 @@ import illustration from "../assets/illustration.jpg"
 import { Form } from 'react-router-dom'
 
 function Intro() {
-    // const [userName, setuserName] = useState("")
-    // console.log(userName)
+
+    // const refreshPage = () => {
+    //     console.log("refreshing")
+    //     window.location.reload(true);
+    // }
     return (
         <div className='intro'>
             <div>
@@ -24,7 +27,7 @@ function Intro() {
                         autoComplete='given-name'
                         required
                     />
-                    <button type='submit' className='btn btn--dark'>
+                    <button type='submit' className='btn btn--dark' >
                         <span>Create Account <UserPlusIcon width={20} /></span>
                     </button>
                 </Form>
