@@ -1,5 +1,5 @@
 import React from 'react'
-import { json, useLoaderData } from 'react-router-dom';
+import { json, redirect, useLoaderData } from 'react-router-dom';
 import { fetchData } from '../helpers';
 import Intro from '../Components/Intro';
 
@@ -14,7 +14,13 @@ export async function dashboardAction({request}) {
   const data = await request.formData();
   // console.log({data, request})
   const userData = Object.fromEntries(data)
-  localStorage.setItem("userName", JSON.stringify(userData.userName));
+  try {
+    localStorage.setItem("userName", JSON.stringify(userData.userName));
+    redirect("/")
+    return toast.success(`Welcome ${userDAta.userName}`)
+  }catch(e){
+    throw new Error("There was a problem creating your account.")
+  }
 }
 
 //dashboard
