@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 //pages
 import Dashboard, { dashboardAction, dashboardLoader } from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
-import Main, { mainLoader } from "./Layouts/main";
+import Main, { mainLoader } from "./Layouts/Main";
 
 //actions
 import logOutAction from './actions/Logout';
