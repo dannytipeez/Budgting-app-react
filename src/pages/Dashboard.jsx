@@ -1,34 +1,67 @@
 import React from 'react'
 import { json, redirect, useLoaderData } from 'react-router-dom';
-import { fetchData } from '../helpers';
+import { createBudget, fetchData } from '../helpers';
 import Intro from '../Components/Intro';
 import { toast } from 'react-toastify';
+import AddNewBudget from '../Components/AddNewBudget';
 
 //loader
 export function dashboardLoader() {
   const userName = fetchData('userName');
-  return { userName };
+  const budgets = fetchData('budgets');
+
+  return { userName, budgets };
 }
 
 //action
 export async function dashboardAction({ request }) {
   const data = await request.formData();
-  const userData = Object.fromEntries(data)
-  try {
-    localStorage.setItem("userName", JSON.stringify(userData.userName));
-    return toast.success(`Welcome ${userData.userName}`)
+  const {_action, ...values } = Object.fromEntries(data);
+  
+  //new user submission
+  if (_action === "newUser") {
+    try {
+    localStorage.setItem("userName", JSON.stringify(values.userName));
+    return toast.success(`Welcome ${values.userName}`)
   } catch (e) {
     throw new Error("There was a problem creating your account.")
   }
+  }
+  
+  if (_action === "createBudget") {
+    try {
+      //create budget
+      createBudget({
+        name: values.newBudget,
+        amount: values.newBudgetAmount
+      })
+      return toast.success("Budget created successfully!")
+    } catch (e) {
+      throw new Error("There was a problem creating your budget.")
+    }
+  }
+  
 }
 
 //dashboard
 const Dashboard = () => {
-  const { userName } = useLoaderData();
+  const { userName, budgets } = useLoaderData();
 
   return (
     <>
-      {userName ? (<p>{userName}</p>) : (<Intro />)}
+      {userName ? (
+        <div>
+          <h1>Welcome back, <span className='accent'>{userName}</span></h1>
+          <br />
+          <div className='grid-sm'>
+            <div className='grid-lg'>
+              <div className='flex-lg'>
+              <AddNewBudget />
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (<Intro />)}
     </>
   )
 }

@@ -27,6 +27,7 @@ function Intro() {
                         autoComplete='given-name'
                         required
                     />
+                    <input type='hidden' name='_action' value="newUser" />
                     <button type='submit' className='btn btn--dark' >
                         <span>Create Account <UserPlusIcon width={20} /></span>
                     </button>
