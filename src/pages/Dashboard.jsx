@@ -1,6 +1,6 @@
 import React from 'react'
 import { json, redirect, useLoaderData } from 'react-router-dom';
-import { createBudget, fetchData } from '../helpers';
+import { createBudget, createExpense, fetchData } from '../helpers';
 import Intro from '../Components/Intro';
 import { toast } from 'react-toastify';
 import AddNewBudget from '../Components/AddNewBudget';
@@ -44,6 +44,11 @@ export async function dashboardAction({ request }) {
   if (_action === "createExpense") {
     try {
       //create expense 
+      createExpense({
+        name: values.newExpense,
+        amount: values.newExpenseAmount,
+        budgetId: values.newExpenseBudget
+      })
       return toast.success(`Expense ${values.newExpense} created!`)
     } catch (e) {
       throw new Error("There was a problem adding your expense.")
