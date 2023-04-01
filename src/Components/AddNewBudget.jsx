@@ -2,13 +2,15 @@ import { CurrencyDollarIcon } from '@heroicons/react/24/solid'
 import React, { useEffect, useRef } from 'react'
 import { Form, useFetcher } from 'react-router-dom'
 
+
 function AddNewBudget() {
   const fetcher = useFetcher();
   const formRef = useRef();
   const focusRef = useRef();
 
+
   //fetcher functionalities
-  const isSubmitting = fetcher.state === 'submitting'
+  const isSubmitting = fetcher.state === 'submitting';
 
   useEffect(() => {
     if(!isSubmitting) {
