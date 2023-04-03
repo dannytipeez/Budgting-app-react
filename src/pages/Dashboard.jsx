@@ -64,7 +64,6 @@ export async function dashboardAction({ request }) {
         throw new Error("There was a problem adding your expense.")
       }
     }
-  
 }
 
 //dashboard

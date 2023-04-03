@@ -58,3 +58,22 @@ export const formatCurrency = (amt) => {
 }
 
 
+//calculate spent expenses
+export const calculateSpentByBudget = (budgetId) => {
+    const expenses = fetchData("expenses")??[];
+    const totalExpense = expenses.reduce((acc, expense) => {
+        //if expense.budgetId === budgetId calcuate expense
+        if (budgetId != expense.budgetId) return acc
+        //add expenses
+        return acc + expense.amount
+    }, 0)
+    return totalExpense;
+}
+
+//format percentage
+export const formatPercentage = (amt) => {
+    return amt.toLocaleString(undefined, {
+        style: 'percent',
+        minimumFractionDigits: 2,
+    })
+}
