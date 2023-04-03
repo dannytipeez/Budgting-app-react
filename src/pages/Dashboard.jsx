@@ -1,11 +1,18 @@
+//react-router and react
 import React from 'react'
 import { json, redirect, useLoaderData } from 'react-router-dom';
+
+//helpers
 import { createBudget, createExpense, fetchData } from '../helpers';
+
+//components
 import Intro from '../Components/Intro';
-import { toast } from 'react-toastify';
 import AddNewBudget from '../Components/AddNewBudget';
 import AddExpenseForm from '../Components/AddExpenseForm';
 import BudgetItem from '../Components/BudgetItem';
+
+//toastify
+import { toast } from 'react-toastify';
 
 //loader
 export function dashboardLoader() {
@@ -15,46 +22,48 @@ export function dashboardLoader() {
   return { userName, budgets };
 }
 
+
 //action
 export async function dashboardAction({ request }) {
   const data = await request.formData();
   const {_action, ...values } = Object.fromEntries(data);
   
-  //new user submission
-  if (_action === "newUser") {
-    try {
-    localStorage.setItem("userName", JSON.stringify(values.userName));
-    return toast.success(`Welcome ${values.userName}`)
-  } catch (e) {
-    throw new Error("There was a problem creating your account.")
-  }
-  }
-  
-  if (_action === "createBudget") {
-    try {
-      //create budget
-      createBudget({
-        name: values.newBudget,
-        amount: values.newBudgetAmount
-      })
-      return toast.success("Budget created successfully!")
-    } catch (e) {
-      throw new Error("There was a problem creating your budget.")
+    //new user submission
+    if (_action === "newUser") {
+      try {
+        localStorage.setItem("userName", JSON.stringify(values.userName));
+        return toast.success(`Welcome ${values.userName}`);
+      } catch (e) {
+        throw new Error("There was a problem creating your account.")
+      }
     }
-  }
-  if (_action === "createExpense") {
-    try {
-      //create expense 
-      createExpense({
-        name: values.newExpense,
-        amount: values.newExpenseAmount,
-        budgetId: values.newExpenseBudget
-      })
-      return toast.success(`Expense ${values.newExpense} created!`)
-    } catch (e) {
-      throw new Error("There was a problem adding your expense.")
+    
+
+    if (_action === "createBudget") {
+      try {
+        //create budget
+        createBudget({
+          name: values.newBudget,
+          amount: values.newBudgetAmount
+        })
+        return toast.success("Budget created successfully!")
+      } catch (e) {
+        throw new Error("There was a problem creating your budget.")
+      }
     }
-  }
+    if (_action === "createExpense") {
+      try {
+        //create expense 
+        createExpense({
+          name: values.newExpense,
+          amount: values.newExpenseAmount,
+          budgetId: values.newExpenseBudget
+        })
+        return toast.success(`Expense ${values.newExpense} created!`)
+      } catch (e) {
+        throw new Error("There was a problem adding your expense.")
+      }
+    }
   
 }
 

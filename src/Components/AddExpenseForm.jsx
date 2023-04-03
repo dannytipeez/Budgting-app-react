@@ -37,7 +37,15 @@ function AddExpenseForm({ budgets }) {
                 </div>
                 <div className='grid-xs'>
                     <label htmlFor='newExpenseAmount'>Amount</label>
-                    <input type='number' id='newExpenseAmount' name='newExpenseAmount' placeholder='e.g, 100.50' ref={focusRef} step={0.01} inputMode='decimal' required />
+                    <input 
+                      type='number' 
+                      id='newExpenseAmount' name='newExpenseAmount' 
+                      placeholder='e.g, 100.50' 
+                      ref={focusRef} 
+                      step={0.01} 
+                      inputMode='decimal' 
+                      required 
+                      />
             </div>
             <div className='grid-xs' hidden={budgets.length === 1}>
                 <select name='newExpenseBudget'
@@ -49,7 +57,8 @@ function AddExpenseForm({ budgets }) {
                             return (
                                 <option key={budget.id} value={budget.id}>{budget.name}</option>
                             )
-                        })
+                        }
+                      )
                     }
                 </select>
             </div>
