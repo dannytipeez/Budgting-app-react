@@ -2,13 +2,15 @@ import { CurrencyDollarIcon } from '@heroicons/react/24/solid'
 import React, { useEffect, useRef } from 'react'
 import { Form, useFetcher } from 'react-router-dom'
 
+
 function AddNewBudget() {
   const fetcher = useFetcher();
   const formRef = useRef();
   const focusRef = useRef();
 
+
   //fetcher functionalities
-  const isSubmitting = fetcher.state === 'submitting'
+  const isSubmitting = fetcher.state === 'submitting';
 
   useEffect(() => {
     if(!isSubmitting) {
@@ -23,14 +25,17 @@ function AddNewBudget() {
         Create budget
        </h2>
        <fetcher.Form method='post' className='grid-sm' ref={formRef}>
+
         <div className='grid-xs'>
           <label htmlFor='newBudget'>Budget Name</label>
           <input type='text' name='newBudget' id='newBudget' placeholder='e.g, Groceries' required ref={focusRef} />
         </div>
+
         <div className='grid-xs'>
           <label htmlFor='newBudgetAmount'>Budget Amount</label>
           <input type='number' step="0.01" name='newBudgetAmount' id='newBudgetAmount' placeholder='e.g, $1000' inputMode='decimal' required />
         </div>
+
         <input type='hidden' name="_action" value="createBudget" />
         {
         !isSubmitting ? 
