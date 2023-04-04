@@ -13,7 +13,7 @@ function AddNewBudget() {
   const isSubmitting = fetcher.state === 'submitting';
 
   useEffect(() => {
-    if(!isSubmitting) {
+    if (!isSubmitting) {
       formRef.current.reset();
       focusRef.current.focus();
     }
@@ -21,10 +21,10 @@ function AddNewBudget() {
 
   return (
     <div className='form-wrapper'>
-       <h2 className='h3'>
+      <h2 className='h3'>
         Create budget
-       </h2>
-       <fetcher.Form method='post' className='grid-sm' ref={formRef}>
+      </h2>
+      <fetcher.Form method='post' className='grid-sm' ref={formRef}>
 
         <div className='grid-xs'>
           <label htmlFor='newBudget'>Budget Name</label>
@@ -38,24 +38,24 @@ function AddNewBudget() {
 
         <input type='hidden' name="_action" value="createBudget" />
         {
-        !isSubmitting ? 
-        (
-        <button type='submit' className='btn btn-dark'>
-        <span>
-          Create Budget
-        </span>
-        <CurrencyDollarIcon width={20} />
-      </button>
-  ) : (
-    <button type='submit' className='btn btn-dark'>
-          <span>
-            Submitting...
-          </span>
-        </button>
-  )
-      }
-        
-       </fetcher.Form>
+          !isSubmitting ?
+            (
+              <button type='submit' className='btn btn-dark'>
+                <span>
+                  Create Budget
+                </span>
+                <CurrencyDollarIcon width={20} />
+              </button>
+            ) : (
+              <button type='submit' className='btn btn-dark'>
+                <span>
+                  Submitting...
+                </span>
+              </button>
+            )
+        }
+
+      </fetcher.Form>
     </div>
   )
 }
