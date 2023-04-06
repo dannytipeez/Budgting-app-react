@@ -4,12 +4,6 @@ export const fetchData = (key) => {
 }
 
 
-//delete item
-export const deleteItem = ({ key }) => {
-    return localStorage.removeItem(key);
-}
-
-
 const generateRandomColor = () => {
     const existingBudgetsLength = fetchData("budgets")?.length ?? 0;
     return `${existingBudgetsLength * 34} 65% 50%`
@@ -81,3 +75,20 @@ export const formatPercentage = (amt) => {
 //format date
 
 export const formatDateToLocaleString = (epoch) => new Date(epoch).toLocaleDateString();
+
+//get all items from local storage
+export const getAllMatchingPairs = ({ category, key, value }) => {
+    const data = fetchData(category) ?? [];
+    return data.filter((item) => item[key] === value);
+}
+
+
+//delete expense
+export const deleteItem = ({ key, id }) => {
+    const existingData = fetchData(key) ?? [];
+    if (id) {
+        const newData = existingData.filter((item) => item.id !== id)
+        return localStorage.setItem(key, JSON.stringify(newData));
+    }
+    return localStorage.removeItem(key);
+}
