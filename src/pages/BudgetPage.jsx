@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLoaderData } from 'react-router-dom'
+import { redirect, useLoaderData } from 'react-router-dom'
 import { createExpense, deleteItem, getAllMatchingPairs } from '../helpers'
 import BudgetItem from '../Components/BudgetItem';
 import AddExpenseForm from '../Components/AddExpenseForm';
@@ -29,21 +29,21 @@ export async function budgetLoader({ params }) {
 export async function budgetAction({ request }) {
     const data = await request.formData();
     const { _action, ...values } = Object.fromEntries(data);
-    
+
     //action
     if (_action === "createExpense") {
         try {
-          //create expense 
-          createExpense({
-            name: values.newExpense,
-            amount: values.newExpenseAmount,
-            budgetId: values.newExpenseBudget
-          })
-          return toast.success(`Expense ${values.newExpense} created!`)
+            //create expense 
+            createExpense({
+                name: values.newExpense,
+                amount: values.newExpenseAmount,
+                budgetId: values.newExpenseBudget
+            })
+            return toast.success(`Expense ${values.newExpense} created!`)
         } catch (e) {
-          throw new Error("There was a problem adding your expense.")
+            throw new Error("There was a problem adding your expense.")
         }
-      }
+    }
     if (_action === "deleteExpense") {
         try {
             //delete expense
@@ -54,6 +54,20 @@ export async function budgetAction({ request }) {
             return toast.success(`Expense deleted!`)
         } catch (e) {
             throw new Error("There was a problem deleting your expense.")
+        }
+    }
+    //delete budget
+    if (_action === "deleteBudget") {
+        try {
+            //delete budget
+            deleteItem({
+                key: "budgets",
+                id: values.budgetId
+            });
+            redirect("/")
+            return toast.success(`Budget deleted!`);
+        } catch (e) {
+            throw new Error("There was a problem deleting your budget.")
         }
     }
 }
@@ -67,7 +81,7 @@ function BudgetPage() {
         }}>
             <h2><span className="accent">{budget.name}</span> Expenses</h2>
             <div className="flex-lg">
-                <BudgetItem budget={budget} />
+                <BudgetItem budget={budget} showDelete={true} />
                 <AddExpenseForm budgets={[budget]} />
                 {
                     expenses && expenses.length > 0 && (
