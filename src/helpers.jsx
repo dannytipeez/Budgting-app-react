@@ -4,12 +4,6 @@ export const fetchData = (key) => {
 }
 
 
-//delete item
-export const deleteItem = ({ key }) => {
-    return localStorage.removeItem(key);
-}
-
-
 const generateRandomColor = () => {
     const existingBudgetsLength = fetchData("budgets")?.length ?? 0;
     return `${existingBudgetsLength * 34} 65% 50%`
@@ -18,7 +12,7 @@ const generateRandomColor = () => {
 
 //create budget
 export const createBudget = (
-    {name, amount}
+    { name, amount }
 ) => {
     const newItem = {
         id: crypto.randomUUID(),
@@ -35,7 +29,7 @@ export const createBudget = (
 
 //create expense 
 export const createExpense = (
-    {name, amount, budgetId}
+    { name, amount, budgetId }
 ) => {
     const newItem = {
         id: crypto.randomUUID(),
@@ -45,7 +39,7 @@ export const createExpense = (
         budgetId: budgetId
     }
     const existingExpenses = fetchData("expenses") ?? []
-    
+
     return localStorage.setItem('expenses', JSON.stringify([...existingExpenses, newItem]))
 }
 
@@ -60,7 +54,7 @@ export const formatCurrency = (amt) => {
 
 //calculate spent expenses
 export const calculateSpentByBudget = (budgetId) => {
-    const expenses = fetchData("expenses")??[];
+    const expenses = fetchData("expenses") ?? [];
     const totalExpense = expenses.reduce((acc, expense) => {
         //if expense.budgetId === budgetId calcuate expense
         if (budgetId != expense.budgetId) return acc
@@ -81,3 +75,20 @@ export const formatPercentage = (amt) => {
 //format date
 
 export const formatDateToLocaleString = (epoch) => new Date(epoch).toLocaleDateString();
+
+//get all items from local storage
+export const getAllMatchingPairs = ({ category, key, value }) => {
+    const data = fetchData(category) ?? [];
+    return data.filter((item) => item[key] === value);
+}
+
+
+//delete expense
+export const deleteItem = ({ key, id }) => {
+    const existingData = fetchData(key) ?? [];
+    if (id) {
+        const newData = existingData.filter((item) => item.id !== id)
+        return localStorage.setItem(key, JSON.stringify(newData));
+    }
+    return localStorage.removeItem(key);
+}

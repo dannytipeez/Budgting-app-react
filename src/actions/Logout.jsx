@@ -5,7 +5,7 @@ import { deleteItem } from "../helpers"
 import { toast } from "react-toastify"
 
 
-export default async function LogOutAction({key}) {
+export default async function LogOutAction({ key }) {
     return (
         //delete user
         deleteItem({
