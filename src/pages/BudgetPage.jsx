@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { redirect, useLoaderData } from 'react-router-dom'
-import { createExpense, deleteItem, getAllMatchingPairs } from '../helpers'
+import { createExpense, deleteItem, formatDateToLocaleString, getAllMatchingPairs } from '../helpers'
 import BudgetItem from '../Components/BudgetItem';
 import AddExpenseForm from '../Components/AddExpenseForm';
 import { mainLoader } from '../Layouts/Main';
 import Table from '../Components/Table';
 import { toast } from 'react-toastify';
+import BarChart from '../Components/BarChart';
 
 
 export async function budgetLoader({ params }) {
@@ -33,7 +34,7 @@ export async function budgetAction({ request }) {
     //action
     if (_action === "createExpense") {
         try {
-            //create expense 
+            //create expense
             createExpense({
                 name: values.newExpense,
                 amount: values.newExpenseAmount,
@@ -75,6 +76,30 @@ export async function budgetAction({ request }) {
 function BudgetPage() {
     const { budget, expenses } = useLoaderData();
 
+    //extract time from expenses -> obect create array of time
+    var expenseTime = expenses.map((expense) => {
+        return formatDateToLocaleString(expenses[0].createdAt)
+    })
+
+    //amounts
+    var expenseAmount = expenses.map((expense) => {
+        return expense.amount
+    }
+    )
+    // Get the computed value of the --accent variable
+    const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent');
+    const hslColor = "hsl(" + accentColor + ")";
+
+    const [userData, setUserData] = useState({
+        labels: expenseTime,
+        datasets: [{
+            label: 'Expense Amount',
+            data: expenseAmount,
+            backgroundColor: hslColor,
+        }
+        ]
+    })
+
     return (
         <div className='grid-lg' style={{
             "--accent": budget.color
@@ -87,6 +112,7 @@ function BudgetPage() {
                     expenses && expenses.length > 0 && (
                         <div className="grid-md">
                             <h2><span className='accent'>{budget.name}</span> expenses.</h2>
+                            <BarChart chartData={userData} />
                             <Table expenses={expenses} showBudget={false} />
                         </div>)
                 }
